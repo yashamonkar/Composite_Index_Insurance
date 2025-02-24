@@ -4,6 +4,7 @@
 
 #ignore the CAPOW input files
 data/tax/*
+data/no_tax/*
 
 # Session Data files
 .RData
