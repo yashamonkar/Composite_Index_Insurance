@@ -4,6 +4,9 @@ This manuscript is submitted to Environmental Research: Energy (https://iopscien
 
 ### Title - "A composite index-based insurance instrument for managing the financial risk of variable hydrometeorology for electric utilities"
 
+### Authors 
+Yash Amonkar, Corey Pahel-Short, Amir Zeighami, Yufei Sue, Jordan D. Kernc, and Gregory W. Characklisa
+
 ### Abstract 
 Variable hydrometeorological conditions can impact electric utilities' financial stability. 
 Extreme temperatures often increase electricity demand, raising utility costs, while drought reduces hydropower generation and often reduces revenues, with financial impacts potentially exacerbated by spikes in fuel prices, particularly natural gas. 
