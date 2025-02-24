@@ -7,6 +7,7 @@ data/tax/*
 data/no_tax/*
 data/Simulated_Demand.csv
 data/Load_Profile.csv
+data/temp_annual.csv
 
 # Session Data files
 .RData
