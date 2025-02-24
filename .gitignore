@@ -5,6 +5,7 @@
 #ignore the CAPOW input files
 data/tax/*
 data/no_tax/*
+data/Simulated_Demand.csv
 
 # Session Data files
 .RData
