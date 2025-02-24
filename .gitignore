@@ -2,6 +2,9 @@
 .Rhistory
 .Rapp.history
 
+#ignore the CAPOW input files
+data/tax/*
+
 # Session Data files
 .RData
 .RDataTmp
