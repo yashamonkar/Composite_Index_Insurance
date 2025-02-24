@@ -14,7 +14,8 @@ The utility's financial risk and the effectiveness of the new contract are also 
 Overall, this case study represents a new approach to managing financial risk arising from hydrometeorological and market variability for vertically integrated utilities, the most common utility structure.
 
 ### Repository Information
-This repository contains the codebase and a subset of the data used in the analysis. Due to data size constraints, the complete dataset and code are available on Zenodo (link provided).
+This repository contains the codebase and a subset of the data used in the analysis and the code to generate all the plots in the manuscript.
+Due to GitHub data size constraints, the complete dataset and code are available on Zenodo (link provided).
 The code files in the codebase folder are numbered sequentially, representing the code in which to run them.
 Selected numbered scripts can be run using the provided subset of data files.
 
