@@ -45,15 +45,19 @@ pge_cities = c('FRESNO_T', 'SACRAMENTO_T','SAN.JOSE_T', 'SAN.FRANCISCO_T')
 CDD = CDD[,pge_cities]
 CDD = rowMeans(CDD)
 
+#Simulation abronmality
+rm_sim <- 101 #Remove the 101 simulation run
+
+
 #______________________________________________________________________#
 #Divide into training and testing. 
 set.seed(123)
 train_frac <- 0.8
 
 #Set-up regression dataset
-reg_dataset <- data.frame(streamflow = scale(log(streamflow)), 
-                          CDD = scale(CDD),
-                          Natural_Gas = scale(Yearly_gas$V1),
+reg_dataset <- data.frame(streamflow = scale(log(streamflow))[-rm_sim], 
+                          CDD = scale(CDD)[-rm_sim],
+                          Natural_Gas = scale(Yearly_gas$V1)[-rm_sim],
                           Net_revenue = net_revenue$Net_revenue)
 
 #Separate into Testing and Training Datasets
