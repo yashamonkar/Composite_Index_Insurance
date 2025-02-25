@@ -44,6 +44,8 @@ pge_cities = c('FRESNO_T', 'SACRAMENTO_T','SAN.JOSE_T', 'SAN.FRANCISCO_T')
 CDD = CDD[,pge_cities]
 CDD = rowMeans(CDD)
 
+#Simulation abronmality
+rm_sim <- 101 #Remove the 101 simulation run
 
 #______________________________________________________________________#
 #Divide into training and testing. 
@@ -51,9 +53,9 @@ set.seed(123)
 train_frac <- 0.8
 
 #Set-up regression dataset
-reg_dataset <- data.frame(streamflow = scale(log(streamflow)), 
-                          CDD = scale(CDD),
-                          Natural_Gas = scale(Yearly_gas$V1),
+reg_dataset <- data.frame(streamflow = scale(log(streamflow))[-rm_sim], 
+                          CDD = scale(CDD)[-rm_sim],
+                          Natural_Gas = scale(Yearly_gas$V1)[-rm_sim],
                           Net_revenue = net_revenue$Net_revenue)
 
 #Separate into Testing and Training Dataset
@@ -126,7 +128,7 @@ paste0("The mean testing error is ", mean((test_dataset$Net_revenue-predict(reg_
 
 plt_dataset <- data.frame(Revenues = c(train_dataset$Net_revenue, test_dataset$Net_revenue),
                           Fitted = c(reg_composite$fitted.values, predict(reg_composite, newdata)),
-                          Type = c(rep("Training",400), rep("Testing",100) ))
+                          Type = c(rep("Training",400), rep("Testing",99) ))
 
 pdf("figures/Testing_Training_Error.pdf", 
     height=7, width=9)
@@ -318,7 +320,7 @@ Composite_index <- match_var(upper=0.3,
 #Composite Index Plots for the paper
 plt_dataset <- data.frame(Year = rep(1:nrow(reg_dataset),2),
                           Revenue = c(reg_dataset$Net_revenue,Composite_index$hedged_revenue),
-                          Type = rep(c("Unmanaged Revenues", "Managed Revenues"), each=500))
+                          Type = rep(c("Unmanaged Revenues", "Managed Revenues"), each=499))
 
 pdf("figures/Composite_Revenues.pdf",height=8, width=12)
 ggplot(plt_dataset) +
