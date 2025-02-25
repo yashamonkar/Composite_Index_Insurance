@@ -16,10 +16,9 @@ get_revenue_dependence <- function(Net_revenue, streamflow, CDD,
   #Set up the data set. 
   plt_dataset <- data.frame(streamflow = streamflow, 
                             CDD = CDD,
-                            Market_Price = fin_results$Market_Price,
-                            NG_Price = Yearly_gas$V1,
-                            Net_revenue = fin_results$Net_Revenue)
-  plt_dataset <- plt_dataset[-which.min(plt_dataset$Net_revenue), ]
+                            Market_Price = Market_Price,
+                            NG_Price = NG_Price,
+                            Net_revenue = Net_revenue)
   
   #--------------------------All Years----------------------------------#
 

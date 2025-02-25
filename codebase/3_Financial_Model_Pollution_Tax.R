@@ -33,6 +33,8 @@ Yearly_gas <- read.csv("data/Yearly_gas.csv", header = FALSE)
 #Load Profile -- Might not need
 Load_profile <- read.csv("data/Load_Profile.csv", header = FALSE)
 
+#Simulation abronmality
+rm_sim <- 101 #Remove the 101 simulation run
 
 #______________________________________________________________________________#
 ###Model Hyper-parameters###
@@ -366,6 +368,10 @@ colnames(fin_results) = c("Net_Revenue", "Market_Price")
 #Save the net-revenues
 plt_dataset <- data.frame(Market_Price = fin_results$Market_Price,
                           Net_revenue = fin_results$Net_Revenue)
+
+#Remove the results of the abnormal simulation!
+plt_dataset <- plt_dataset[-rm_sim,]
+
 write.table(plt_dataset, "sims/Net_Revenue_Pollution_Tax.csv", sep=",")
 
 
