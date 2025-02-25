@@ -34,6 +34,8 @@ Yearly_gas <- read.csv("data/Yearly_gas.csv", header = FALSE)
 #Load Profile 
 Load_profile <- read.csv("data/Load_Profile.csv", header = FALSE)
 
+#Simulation abronmality
+rm_sim <- 101 #Remove the 101 simulation run
 
 
 #______________________________________________________________________________#
@@ -366,6 +368,10 @@ colnames(fin_results) = c("Net_Revenue", "Market_Price")
 #Save the net-revenues & Market Price Information
 plt_dataset <- data.frame(Market_Price = fin_results$Market_Price,
                           Net_revenue = fin_results$Net_Revenue)
+
+#Remove the results of the abnormal simulation!
+plt_dataset <- plt_dataset[-rm_sim,]
+
 write.table(plt_dataset, "sims/Net_Revenue_no_tax.csv", sep=",")
 
 
@@ -376,11 +382,13 @@ write.table(plt_dataset, "sims/Net_Revenue_no_tax.csv", sep=",")
 sites = c('ORO_fnf', 'SHA_fnf', 'FOL_fnf', 'PAR_fnf', 'NML_fnf', 'MIL_fnf', 'PFT_fnf')
 streamflow = streamflow[,sites]
 streamflow = rowMeans(streamflow)
+streamflow = streamflow[-rm_sim]
 
 ###CDD
 pge_cities = c('FRESNO_T', 'SACRAMENTO_T','SAN.JOSE_T', 'SAN.FRANCISCO_T')
 CDD = CDD[,pge_cities]
 CDD = rowMeans(CDD)
+CDD = CDD[-rm_sim]
 
 #Data for plots for Sector Revenue Validation. 
 Sectoral_Rev <- bind_cols(lapply(Sectoral_Revenue,data.frame))
@@ -397,32 +405,21 @@ pge_deliveries <- c(79774, 82226, 83017)
 pge_10_k_rev <- c(12.261, 12.083, 12.3)
 
 
-#______________________________________________________________________________#
-###Composite Index (for the correlation plot)
-reg_dataset <- data.frame(streamflow = streamflow, 
-                          CDD = CDD,
-                          Natural_Gas = Yearly_gas$V1,
-                          Net_revenue = fin_results$Net_Revenue)
-
-#Regression to compute the fitted values
-composite_index = lm(Net_revenue~ streamflow + CDD + Natural_Gas,
-                     reg_dataset)
-
 #__________________________________________________________________________________#
 #Final Plots for paper
 
 #Validation
 pdf("figures/Validation.pdf",height=7, width=14)
-get_validation(Deliveries = unlist(Total_Deliveries),
-               Net_revenue = fin_results$Net_Revenue)
+get_validation(Deliveries = unlist(Total_Deliveries)[-rm_sim],
+               Net_revenue = fin_results$Net_Revenue[-rm_sim])
 dev.off()
 
 pdf("figures/Unmanaged.pdf",height=15, width=15)
-get_revenue_dependence(Net_revenue = fin_results$Net_Revenue,
+get_revenue_dependence(Net_revenue = plt_dataset$Net_revenue,
                        streamflow = streamflow, 
                        CDD = CDD,
-                       Market_Price = fin_results$Market_Price,
-                       NG_Price = Yearly_gas$V1)
+                       Market_Price = plt_dataset$Market_Price,
+                       NG_Price = Yearly_gas$V1[-rm_sim])
 dev.off()
 
 
