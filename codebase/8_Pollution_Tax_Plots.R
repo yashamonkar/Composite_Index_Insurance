@@ -33,15 +33,23 @@ Yearly_gas <- read.csv("data/Yearly_gas.csv", header = FALSE)
 #Pollution Damages
 Pollution_Damages <- read.csv("sims/Prevented_Pollution_Damages.csv", header = TRUE, sep=",")
 
+#Simulation abronmality
+rm_sim <- 101 #Remove the 101 simulation run
+
 #Streamflow
 sites = c('ORO_fnf', 'SHA_fnf', 'FOL_fnf', 'PAR_fnf', 'NML_fnf', 'MIL_fnf', 'PFT_fnf')
 streamflow = streamflow[,sites]
 streamflow = rowMeans(streamflow)
+streamflow = streamflow[-rm_sim]
 
 ###CDD
 pge_cities = c('FRESNO_T', 'SACRAMENTO_T','SAN.JOSE_T', 'SAN.FRANCISCO_T')
 CDD = CDD[,pge_cities]
 CDD = rowMeans(CDD)
+CDD = CDD[-rm_sim]
+
+#Yearly Gas
+Yearly_gas = Yearly_gas[-rm_sim,]
 
 #______________________________________________________________________________#
 #Final Plots for the paper

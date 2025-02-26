@@ -36,10 +36,13 @@ CDD = CDD[,pge_cities]
 CDD = rowMeans(CDD)
 
 
+#Simulation abronmality
+rm_sim <- 101 #Remove the 101 simulation run
+
 #Set-up regression dataset
-reg_dataset <- data.frame(streamflow = scale(log(streamflow)), 
-                          CDD = scale(CDD),
-                          Natural_Gas = scale(Yearly_gas$V1),
+reg_dataset <- data.frame(streamflow = scale(log(streamflow))[-rm_sim], 
+                          CDD = scale(CDD)[-rm_sim],
+                          Natural_Gas = scale(Yearly_gas$V1)[-rm_sim],
                           Net_revenue = net_revenue$Net_revenue)
 
 #______________________________________________________________________#
@@ -70,7 +73,7 @@ newdata = data.frame(streamflow = test_dataset$streamflow,
 #______________________________________________________________________#
 ###--------------Set-up the insurance contract-----------------------###
 ###Select the percentile
-strike_percentile <- 0.2
+strike_percentile <- 0.15
 
 #Set-up the Values
 revenues <- c(train_dataset$Net_revenue, test_dataset$Net_revenue)
@@ -99,3 +102,4 @@ paste0("The mean hedged revenue is ", round(mean(hedged_revenues)*1000,0), " mil
 paste0("The variance hedged revenue is ", round(var(hedged_revenues)*1000*1000,0), " millions-sq")
 paste0("The 95%var  hedged revenue is ", round(quantile(hedged_revenues, 0.05)*1000,0), " millions")
 paste0("The minimum  hedged revenue is ", round(min(hedged_revenues)*1000,0), " millions")
+

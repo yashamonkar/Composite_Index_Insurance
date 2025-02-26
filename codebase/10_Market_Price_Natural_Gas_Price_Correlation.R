@@ -16,10 +16,13 @@ library(ggplot2)
 Price <- read.csv("data/no_tax/Simulated_Price_Variable_NG.csv", header = FALSE)
 Yearly_gas <- read.csv("data/Yearly_gas.csv", header = FALSE)
 
+#Simulation abronmality
+rm_sim <- 101 #Remove the 101 simulation run
+
 #_________________________________________________________________________#
 ###generate the plot
-plt_dataset <- data.frame(Price = colMeans(Price),
-                          Gas = Yearly_gas$V1)
+plt_dataset <- data.frame(Price = colMeans(Price)[-rm_sim],
+                          Gas = Yearly_gas$V1[-rm_sim])
 
 
 pdf("figures/Market_Price_Gas_Price_Corr.pdf", 

@@ -35,6 +35,9 @@ CDD = rowMeans(CDD)
 ###Model Hyper-parameters###
 N_years <- 500
 
+#Simulation abronmality
+rm_sim <- 101 #Remove the 101 simulation run
+
 #______________________________________________________________________________#
 ######------------CASE 1 - PG&E Owned--------------------------------------#####
 
@@ -124,6 +127,7 @@ CAISO_damages <- prevented_damages$Damages
 prevented_damages <- data.frame(PGE_Owned = pge_owned_damages,
                                 PGE_Total = total_pge_damages,
                                 CAISO = CAISO_damages)
+prevented_damages <- prevented_damages[-rm_sim,]
 write.table(prevented_damages, "sims/Prevented_Pollution_Damages.csv", sep=",")
 
 
@@ -132,9 +136,9 @@ write.table(prevented_damages, "sims/Prevented_Pollution_Damages.csv", sep=",")
 #Generate the prevented damages plots
 
 #Streamflow versus CAISO Damages
-plt_dataset <- data.frame(Damages = CAISO_damages, 
-                          Streamflow = streamflow,
-                          CDD = CDD)
+plt_dataset <- data.frame(Damages = CAISO_damages[-rm_sim], 
+                          Streamflow = streamflow[-rm_sim],
+                          CDD = CDD[-rm_sim])
 
 pdf("figures/Pollution_Damages.pdf", 
     height=7, width=9)
