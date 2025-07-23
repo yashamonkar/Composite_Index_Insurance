@@ -69,7 +69,7 @@ plt_dataset <- data.frame(Damages = Pollution_Damages$CAISO,
                           Index = composite_index_revenue_tax$Composite_index)
 
 p1 <- ggplot(plt_dataset) +
-  geom_point(aes(x=Damages, y = Unmanaged), color='blue', size = 1.35) +
+  geom_point(aes(x=Damages, y = Unmanaged), color='blue', size = 1.5) +
   geom_hline(aes(yintercept = mean(plt_dataset$Unmanaged)), size = 1.15) +
   geom_hline(aes(yintercept = quantile(plt_dataset$Unmanaged, 0.05)), 
              linetype = "dashed", size = 1.15) +
@@ -85,7 +85,7 @@ p1 <- ggplot(plt_dataset) +
         axis.title.y = element_text(size = 18))
 
 p2 <- ggplot(plt_dataset) +
-  geom_point(aes(x=Damages, y = Index), color='red', size = 1.35) +
+  geom_point(aes(x=Damages, y = Index), color='red', size = 1.5) +
   geom_hline(aes(yintercept = mean(plt_dataset$Index)), size = 1.15) +
   geom_hline(aes(yintercept = quantile(plt_dataset$Index, 0.05)), 
              linetype = "dashed", size = 1.15) +
