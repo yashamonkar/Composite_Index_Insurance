@@ -52,7 +52,7 @@ train_frac <- 0.8
 
 #Seperate into Testing and Training Datasets
 train_years <- sample(1:nrow(reg_dataset), 
-                      round(500*train_frac), 
+                      round(499*train_frac), 
                       replace = FALSE)
 train_dataset <- reg_dataset[train_years,]
 test_dataset <- reg_dataset[-train_years,]
@@ -73,7 +73,7 @@ newdata = data.frame(streamflow = test_dataset$streamflow,
 #______________________________________________________________________#
 ###--------------Set-up the insurance contract-----------------------###
 ###Select the percentile
-strike_percentile <- 0.15
+strike_percentile <- 0.05
 
 #Set-up the Values
 revenues <- c(train_dataset$Net_revenue, test_dataset$Net_revenue)
