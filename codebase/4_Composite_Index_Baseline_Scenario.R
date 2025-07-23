@@ -119,6 +119,7 @@ get_corr_plot(Net_revenue = c(train_dataset$Net_revenue,test_dataset$Net_revenue
               Fitted_Values = c(reg_composite$fitted.values, test_pred))
 dev.off()
 
+
 ###--------------------------------------------------------------------------###
 #Develop Model fit estimates & plots
 
@@ -150,7 +151,6 @@ ggplot(plt_dataset) +
         axis.title.x = element_text(size = 14),  
         axis.title.y = element_text(size = 14))
 dev.off()
-
 
 #_________________________________________________________________________#
 ####Functions 
@@ -451,6 +451,7 @@ plt_dataset <- t(plt_dataset)
 
 #Subset to 20-yrs
 ns <- sample(1:ncol(plt_dataset), 20)
+ns <- c(222,45,413,188,494,2, 408, 9,  120, 49, 122, 107, 424,241, 94, 341, 229, 23, 244, 488) #Selected for illustrative purposes.
 plt_dataset <- plt_dataset[,ns]
 colnames(plt_dataset) <- c(1:20)
 
@@ -462,15 +463,21 @@ data <- data.frame(
 data$Type <- factor(data$Type, levels = c("Composite Index Payout", "Streamflow Payout",
                                           "CDD Payout", "Natural Gas Payout", "Unmanaged Loss"))
 
-#Set-up the base ggplot
-p <- ggplot(data, aes(x = Year, y = Value, fill = Type, color = Type)) +
-  geom_bar(data = subset(data, Type != "Unmanaged Loss"), stat = "identity", position = "dodge") +
+# Set-up the base ggplot
+p <- ggplot(data, aes(x = Year, y = Value)) +
+  geom_bar(data = subset(data, Type != "Unmanaged Loss"), 
+           aes(fill = Type), stat = "identity", position = "dodge") +
+  geom_line(data = subset(data, Type == "Unmanaged Loss"), 
+            aes(color = "Losses"), size = 1, linetype = "dashed") +
+  geom_point(data = subset(data, Type == "Unmanaged Loss"), 
+             aes(color = "Losses"), size = 2.5) +
   scale_fill_manual(values = c("Composite Index Payout" = "orange", 
                                "Streamflow Payout" = "brown", 
                                "CDD Payout" = "green", 
-                               "Natural Gas Payout" = "black")) +
-  scale_color_manual(values = c("Unmanaged Loss" = "blue")) +
-  labs(fill = "", color = "", x = "Years", y = "($ Million)") +
+                               "Natural Gas Payout" = "black"),
+                    name = "") +
+  scale_color_manual(values = c("Losses" = "blue"), name = "") +
+  labs(x = "Years", y = "($ Million)") +
   ylim(c(-300,300)) +
   theme_bw() +
   theme(legend.text = element_text(size = 22), 
@@ -478,20 +485,24 @@ p <- ggplot(data, aes(x = Year, y = Value, fill = Type, color = Type)) +
         axis.text.x = element_text(size = rel(1.75)),  
         axis.text.y = element_text(size = rel(1.75)),
         axis.title.x = element_text(size = 18),  
-        axis.title.y = element_text(size = 18)) 
+        axis.title.y = element_text(size = 18))
 
-#Extract the legend
-legend_b <- get_legend( p + guides(color = guide_legend(nrow = 4, override.aes = list(size=7)),
-           shape = guide_legend(override.aes = list(size = 5))))
+# For an even more visible dashed line
+legend_b <- get_legend(p + 
+                         guides(
+                           fill = guide_legend(override.aes = list(size = 5), order = 1),
+                           color = guide_legend(override.aes = list(linetype = "dashed", size = 5, shape = 16), 
+                                                keywidth = unit(2, "cm"), order = 2)
+                         ))
 
-p <- p + 
-  geom_line(data = subset(data, Type == "Unmanaged Loss"), 
-            size = 1, linetype = "dashed", color = 'blue') +
-  geom_point(data = subset(data, Type == "Unmanaged Loss"), 
-             size = 2.5, color = 'blue')
-for(i in 1:21){ p <- p +  geom_segment(x = i-0.5, y = 0, xend = i-0.5, yend = 300, color = "black", linetype = 'dashed')}
-p <- p + theme(legend.position="none")
+# Add vertical lines and remove legend from main plot
+for(i in 1:21){ 
+  p <- p + geom_segment(x = i-0.5, y = 0, xend = i-0.5, yend = 300, 
+                        color = "black", linetype = 'dashed')
+}
+p <- p + theme(legend.position = "none")
 
 pdf("figures/Payouts.pdf",height=7, width=14)
-p + inset_element(legend_b, left = 0.05, bottom = 0.05, right = 0.25, top = 0.25)
+p + inset_element(legend_b, left = 0.05, bottom = 0.05, right = 0.3, top = 0.3)
 dev.off()
+
