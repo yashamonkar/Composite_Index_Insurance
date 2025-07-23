@@ -414,6 +414,7 @@ get_validation(Deliveries = unlist(Total_Deliveries)[-rm_sim],
                Net_revenue = fin_results$Net_Revenue[-rm_sim])
 dev.off()
 
+
 pdf("figures/Unmanaged.pdf",height=15, width=15)
 get_revenue_dependence(Net_revenue = plt_dataset$Net_revenue,
                        streamflow = streamflow, 
@@ -421,5 +422,4 @@ get_revenue_dependence(Net_revenue = plt_dataset$Net_revenue,
                        Market_Price = plt_dataset$Market_Price,
                        NG_Price = Yearly_gas$V1[-rm_sim])
 dev.off()
-
 
