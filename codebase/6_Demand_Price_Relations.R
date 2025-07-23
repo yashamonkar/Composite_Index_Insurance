@@ -141,5 +141,3 @@ ggplot(plt_dataset) +
   labs(shape = "Streamflow") 
 
 dev.off()
-
-
