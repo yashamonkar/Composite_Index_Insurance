@@ -1,6 +1,6 @@
 # Composite_Index_Insurance
 This is the code repository for the manuscript titled, "A composite index-based insurance instrument for managing the financial risk of variable hydrometeorology for electric utilities"
-This manuscript is submitted to Environmental Research: Energy (https://iopscience.iop.org/journal/2753-3751) for consideration. 
+This manuscript is published in Environmental Research: Energy (https://iopscience.iop.org/article/10.1088/2753-3751/adf072/meta).
 
 ### Title - "A composite index-based insurance instrument for managing the financial risk of variable hydrometeorology for electric utilities"
 
